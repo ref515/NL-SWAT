@@ -1,2 +1,909 @@
-# NL-SWAT
-SWAT TEAM
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV FOR SWAT TEAM</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts: Cairo & Tajawal -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        tacticalLight: '#f8fafc',
+                        nlGold: '#d97706',
+                        nlAmber: '#f59e0b',
+                        policeBlue: '#0284c7',
+                        policeRed: '#dc2626',
+                        hudDark: '#090d16',
+                    },
+                    fontFamily: {
+                        sans: ['Tajawal', 'Cairo', 'sans-serif'],
+                        heading: ['Cairo', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Light Tactical Grid Background */
+        body {
+            background-color: #f1f5f9;
+            background-image: 
+                linear-gradient(to right, rgba(148, 163, 184, 0.15) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(148, 163, 184, 0.15) 1px, transparent 1px);
+            background-size: 32px 32px;
+            color: #0f172a;
+            font-family: 'Tajawal', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* Police Siren Glow Effects */
+        .siren-glow-red {
+            animation: pulse-red 1.2s infinite alternate;
+        }
+        .siren-glow-blue {
+            animation: pulse-blue 1.2s infinite alternate 0.6s;
+        }
+
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 8px rgba(220, 38, 38, 0.3); background-color: #dc2626; }
+            100% { box-shadow: 0 0 20px rgba(220, 38, 38, 0.9); background-color: #ef4444; }
+        }
+
+        @keyframes pulse-blue {
+            0% { box-shadow: 0 0 8px rgba(2, 132, 199, 0.3); background-color: #0284c7; }
+            100% { box-shadow: 0 0 20px rgba(2, 132, 199, 0.9); background-color: #38bdf8; }
+        }
+
+        /* Glass HUD Cards */
+        .hud-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(203, 213, 225, 0.9);
+            box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hud-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px -5px rgba(15, 23, 42, 0.1);
+            border-color: #f59e0b;
+        }
+
+        .hud-dark-card {
+            background: linear-gradient(135deg, #090d16 0%, #0f172a 100%);
+            border: 1px solid #1e293b;
+            box-shadow: 0 15px 35px -8px rgba(2, 6, 23, 0.4);
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 350px;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 330px;
+            }
+        }
+
+        /* Radar Sweeper Animation */
+        .radar-sweep {
+            position: relative;
+            overflow: hidden;
+        }
+        .radar-sweep::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, rgba(245, 158, 11, 0.12) 0deg, transparent 50deg, transparent 360deg);
+            animation: radar-spin 5s linear infinite;
+            pointer-events: none;
+        }
+        @keyframes radar-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .tab-btn.active {
+            background: #0f172a;
+            color: #f59e0b;
+            border-color: #f59e0b;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+        }
+
+        .filter-btn.active {
+            background: #0f172a;
+            color: #ffffff;
+            border-color: #f59e0b;
+        }
+
+        .stack-slot.active {
+            border-color: #f59e0b !important;
+            background-color: rgba(245, 158, 11, 0.18) !important;
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.25);
+        }
+
+        /* Scanline Overlay Effect for North Life HUD feel */
+        .scanline-bg {
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0, 0, 0, 0.03) 50%,
+                rgba(0, 0, 0, 0.03)
+            );
+            background-size: 100% 4px;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-nlAmber selection:text-slate-950 scanline-bg">
+
+    <!-- Chosen Palette: North Life Light Tactical Blueprint Grid (#f1f5f9) with Slate Navy Command HUD Cards, North Life Gold/Amber (#f59e0b), and Emergency Siren Lights. -->
+    <!-- Application Structure Plan: Interactive Command Center for North Life SWAT Division. Features live KPI badges, risk matrix with Chart.js, hierarchy inspector, tactical stack blueprint, recruitment timeline chart, arsenal breakdown, and interactive North Life candidate calculator. -->
+    <!-- Visualization & Content Choices: Chart.js Bar & Doughnut charts without SVG; dynamic JS filtering and DOM updates for North Life roles, missions, and equipment. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <!-- Top Police Siren & North Life Header Bar -->
+    <header class="sticky top-0 z-50 bg-slate-950/95 backdrop-blur-md text-white border-b border-slate-800 shadow-2xl">
+        <!-- Flashing Police Siren Bar -->
+        <div class="h-1.5 w-full flex">
+            <div class="h-full w-1/2 siren-glow-red"></div>
+            <div class="h-full w-1/2 siren-glow-blue"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 sm:h-20">
+                
+                <!-- North Life SWAT Brand Emblem -->
+                <div class="flex items-center gap-3">
+                    <div class="relative flex items-center justify-center w-11 h-11 bg-gradient-to-br from-slate-800 to-slate-950 rounded-xl border-2 border-nlAmber shadow-md font-black text-nlAmber text-xl">
+                        🚨
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h1 class="font-heading font-black text-base sm:text-2xl text-white tracking-wide">SWAT DIVISION <span class="text-nlAmber text-sm sm:text-lg font-mono">| NORTH LIFE</span></h1>
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-black bg-red-500/20 text-red-400 border border-red-500/40 animate-pulse">
+                                ● CODE 3 ACTIVE
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-400 hidden sm:block">الدليل التشغيلي والتكتيكي الخاص بفرق التدخل السريع - نورث لايف (North Life)</p>
+                    </div>
+                </div>
+
+                <!-- Navigation Bar -->
+                <nav class="hidden lg:flex items-center space-x-1 space-x-reverse text-xs font-bold text-slate-300">
+                    <a href="#overview" class="px-3.5 py-2 rounded-lg hover:bg-slate-800 hover:text-nlAmber transition">الرئيسية</a>
+                    <a href="#missions" class="px-3.5 py-2 rounded-lg hover:bg-slate-800 hover:text-nlAmber transition">المهام الميدانية</a>
+                    <a href="#hierarchy" class="px-3.5 py-2 rounded-lg hover:bg-slate-800 hover:text-nlAmber transition">الهيكلية والتشكيل</a>
+                    <a href="#recruitment" class="px-3.5 py-2 rounded-lg hover:bg-slate-800 hover:text-nlAmber transition">مسار القبول</a>
+                    <a href="#equipment" class="px-3.5 py-2 rounded-lg hover:bg-slate-800 hover:text-nlAmber transition">العتاد والمركبات</a>
+                    <a href="#calculator" class="mr-2 px-4 py-2.5 rounded-lg bg-nlAmber hover:bg-amber-500 text-slate-950 font-black shadow-lg transition">حاسبة القبول</a>
+                </nav>
+
+                <!-- Mobile Navigation Toggle -->
+                <div class="lg:hidden">
+                    <button id="mobile-menu-btn" class="p-2 rounded-lg bg-slate-800 text-slate-300 hover:text-white border border-slate-700">
+                        ☰
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Nav Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-slate-950 border-t border-slate-800 px-4 pt-3 pb-5 space-y-2 text-sm font-semibold">
+            <a href="#overview" class="block px-3 py-2 rounded-lg hover:bg-slate-800 text-slate-200">الرئيسية</a>
+            <a href="#missions" class="block px-3 py-2 rounded-lg hover:bg-slate-800 text-slate-200">المهام الميدانية</a>
+            <a href="#hierarchy" class="block px-3 py-2 rounded-lg hover:bg-slate-800 text-slate-200">الهيكلية والتشكيل</a>
+            <a href="#recruitment" class="block px-3 py-2 rounded-lg hover:bg-slate-800 text-slate-200">شروط الانضمام</a>
+            <a href="#equipment" class="block px-3 py-2 rounded-lg hover:bg-slate-800 text-slate-200">العتاد والمركبات</a>
+            <a href="#calculator" class="block px-3 py-2.5 rounded-lg bg-nlAmber text-slate-950 font-black text-center mt-2">حاسبة القبول</a>
+        </div>
+    </header>
+
+    <!-- Main App Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+
+        <!-- SECTION 1: North Life Command Header & KPI Metrics -->
+        <section id="overview" class="space-y-6">
+            <!-- Section Intro Paragraph -->
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed bg-white/80 p-4 rounded-xl border border-slate-200 shadow-sm">
+                مرحباً بك في مركز قيادة عمليات <strong>SWAT Division</strong> الخاص بـ <strong>North Life (نورث لايف)</strong>. يهدف هذا الدليل إلى تقديم مرجع تكتيكي موحد وشامل لوحدة التدخل السريع، واستعراض أدوار التشكيل الميداني، السلم القيادي، وشروط القبول المعتمدة رسمياً في نورث لايف.
+            </p>
+
+            <div class="hud-dark-card rounded-3xl p-6 sm:p-10 relative overflow-hidden border-2 border-slate-800 text-white shadow-2xl">
+                <!-- North Life Stylized Graphics Panel -->
+                <div class="absolute -left-10 -bottom-10 opacity-10 text-slate-100 font-mono text-8xl font-black select-none pointer-events-none">
+                    NORTH LIFE
+                </div>
+
+                <div class="relative z-10 max-w-3xl space-y-4">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 bg-nlAmber/20 border border-nlAmber/50 text-nlAmber text-xs font-black rounded-full uppercase tracking-wider">
+                        <span>🛡️</span> NORTH LIFE POLICE DEPARTMENT | SPECIAL WEAPONS AND TACTICS
+                    </div>
+                    <h2 class="text-3xl sm:text-5xl font-heading font-black leading-tight text-white">
+                        الدليل التكتيكي المتقدم <span class="text-nlAmber">SWAT NORTH LIFE</span>
+                    </h2>
+                    <p class="text-slate-300 leading-relaxed text-sm sm:text-base font-medium">
+                        مرجع تشغيلي متكامل مخصص للاستجابة للبلاغات عالية الخطورة (Code 3)، وتكتيكات اقتحام المباني، وتوزيع أدوار التشكيل الميداني (Tactical Stack)، وشروط القبول والعتاد المعتمد في نورث لايف.
+                    </p>
+                </div>
+
+                <!-- KPI Counters Grid -->
+                <div class="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 pt-6 border-t border-slate-800">
+                    <div class="hud-card p-4 rounded-2xl text-center space-y-1 border-slate-700/50">
+                        <div class="text-3xl">🎯</div>
+                        <div class="text-2xl sm:text-3xl font-black text-slate-900 font-heading">5</div>
+                        <div class="text-xs font-bold text-slate-500">مهام سيناريوهات حرجة</div>
+                    </div>
+                    <div class="hud-card p-4 rounded-2xl text-center space-y-1 border-slate-700/50">
+                        <div class="text-3xl">🎖️</div>
+                        <div class="text-2xl sm:text-3xl font-black text-slate-900 font-heading">9</div>
+                        <div class="text-xs font-bold text-slate-500">رتب قيادية وتنظيمية</div>
+                    </div>
+                    <div class="hud-card p-4 rounded-2xl text-center space-y-1 border-slate-700/50">
+                        <div class="text-3xl">🥷</div>
+                        <div class="text-2xl sm:text-3xl font-black text-slate-900 font-heading">6</div>
+                        <div class="text-xs font-bold text-slate-500">تخصصات في خط الاقتحام</div>
+                    </div>
+                    <div class="hud-card p-4 rounded-2xl text-center space-y-1 border-slate-700/50">
+                        <div class="text-3xl">🚔</div>
+                        <div class="text-2xl sm:text-3xl font-black text-slate-900 font-heading">5</div>
+                        <div class="text-xs font-bold text-slate-500">مراحل تقييم وتأهيل</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: Operational Missions -->
+        <section id="missions" class="space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between border-r-4 border-nlAmber pr-4 gap-2">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-heading font-black text-slate-900">1. المهام والسيناريوهات الميدانية</h2>
+                    <p class="text-xs sm:text-sm text-slate-600 mt-1">بلاغات الاستجابة الخاصة للسيطرة على الأزمات عالية الخطورة في نورث لايف.</p>
+                </div>
+                <span class="text-xs font-black bg-slate-900 text-nlAmber px-3 py-1 rounded-md w-max border border-amber-500/30">تصفية تفاعلية</span>
+            </div>
+
+            <!-- Section Intro Paragraph -->
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed bg-white/80 p-4 rounded-xl border border-slate-200">
+                يتناول هذا القسم أساليب التعامل مع البلاغات الميدانية الأكثر خطورة مثل المداهمات، إنقاذ الرهائن، والتعامل مع المسلحين. يمكنك فلترة المهام بحسب مستوى التهديد لمعاينة التكتيكات المناسبة والمخطط البياني المقارن لدرجات المخاطرة.
+            </p>
+
+            <!-- Risk Filter Buttons -->
+            <div class="flex flex-wrap gap-2 items-center text-xs font-bold">
+                <span class="text-slate-700 ml-1">تصفية بحسب مستوى التهديد:</span>
+                <button onclick="filterMissions('all')" class="filter-btn active px-3.5 py-2 rounded-xl border border-slate-300 transition">الكل</button>
+                <button onclick="filterMissions('حرج للغاية')" class="filter-btn px-3.5 py-2 rounded-xl bg-white border border-slate-300 hover:bg-slate-100 transition text-red-600">حرج للغاية (Code 3)</button>
+                <button onclick="filterMissions('مرتفع جداً')" class="filter-btn px-3.5 py-2 rounded-xl bg-white border border-slate-300 hover:bg-slate-100 transition text-orange-600">مرتفع جداً</button>
+                <button onclick="filterMissions('مرتفع')" class="filter-btn px-3.5 py-2 rounded-xl bg-white border border-slate-300 hover:bg-slate-100 transition text-amber-600">مرتفع</button>
+                <button onclick="filterMissions('متوسط')" class="filter-btn px-3.5 py-2 rounded-xl bg-white border border-slate-300 hover:bg-slate-100 transition text-sky-700">متوسط</button>
+            </div>
+
+            <!-- Mission Cards & Chart Container Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                <!-- Mission Cards Grid (7 cols) -->
+                <div id="missions-grid" class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Dynamic Rendering via JS -->
+                </div>
+
+                <!-- Mission Chart & Rules Panel (5 cols) -->
+                <div class="lg:col-span-5 space-y-4">
+                    <div class="hud-card p-5 rounded-2xl space-y-3">
+                        <div class="flex items-center justify-between border-b pb-3 border-slate-200">
+                            <h3 class="font-heading font-black text-slate-900 text-sm sm:text-base">مؤشر خطورة السيناريوهات</h3>
+                            <span class="text-[10px] bg-amber-100 text-amber-900 font-bold px-2 py-0.5 rounded">مخطط بياني</span>
+                        </div>
+                        <p class="text-xs text-slate-500 leading-relaxed">تحليل بياني يوضح درجة الخطورة والتعقيد الميداني لكل نوع من أنواع البلاغات.</p>
+                        <div class="chart-container">
+                            <canvas id="missionsChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Rules of Engagement Card -->
+                    <div class="hud-dark-card rounded-2xl p-5 text-white border border-slate-800 space-y-3 relative overflow-hidden">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                            <span class="text-xs font-black text-nlAmber">RULES OF ENGAGEMENT</span>
+                            <span class="text-xs font-mono text-slate-400">NORTH LIFE CODE 3</span>
+                        </div>
+                        <h4 class="font-heading font-black text-white text-sm">بروتوكول واستخدام القوة (North Life Rules)</h4>
+                        <ul class="text-xs text-slate-300 space-y-2 list-disc list-inside">
+                            <li>عدم إطلاق النار إلا بعد صدور أمر مباشر من قائد التشكيل أو في حال التهديد المباشر للحياة.</li>
+                            <li>منح الأولوية المطلقة لحماية الرهائن وإجلائهم قبل اقتحام نقطة الاشتباك.</li>
+                            <li>التنسيق الدائم عبر الموجه اللاسلكي المشفر الخاص بـ SWAT في نورث لايف.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: Hierarchy & Tactical Stack Visualizer -->
+        <section id="hierarchy" class="space-y-6">
+            <div class="border-r-4 border-slate-900 pr-4">
+                <h2 class="text-2xl sm:text-3xl font-heading font-black text-slate-900">2. الهيكلية القيادية وتشكيل الاقتحام الميداني</h2>
+                <p class="text-xs sm:text-sm text-slate-600 mt-1">التدرج التنظيمي ووظائف عناصر الاقتحام داخل الممرات والمباني المغلقة.</p>
+            </div>
+
+            <!-- Section Intro Paragraph -->
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed bg-white/80 p-4 rounded-xl border border-slate-200">
+                يعرض هذا القسم هيكلية الرتب المعتمدة في SWAT لضمان السلسلة القيادية الصارمة، بالإضافة إلى أداة تفاعلية تفصيلية لتشكيل الاقتحام التكتيكي (Stack Inspector). انقر على الأدوار المختلفة لاستكشاف عتاد ووظيفة كل عنصر أثناء المداهمات.
+            </p>
+
+            <!-- Tabs Navigation -->
+            <div class="flex border-b border-slate-300 gap-2 overflow-x-auto pb-1">
+                <button onclick="switchHierarchyTab('ranks')" id="tab-btn-ranks" class="tab-btn active px-5 py-3 text-xs sm:text-sm font-black rounded-t-2xl border-b-2 transition flex items-center gap-2 whitespace-nowrap">
+                    <span>🎖️</span> السلم القيادي والرتب (9 رتب)
+                </button>
+                <button onclick="switchHierarchyTab('stack')" id="tab-btn-stack" class="tab-btn px-5 py-3 text-xs sm:text-sm font-black rounded-t-2xl bg-slate-200 text-slate-700 border-b-2 border-transparent transition flex items-center gap-2 whitespace-nowrap">
+                    <span>🥷</span> تشكيل الاقتحام التكتيكي (Stack Blueprint)
+                </button>
+            </div>
+
+            <!-- TAB 1: Ranks Inspector -->
+            <div id="tab-content-ranks" class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                    <!-- Rank List (5 cols) -->
+                    <div class="md:col-span-5 space-y-2 max-h-[480px] overflow-y-auto pr-1">
+                        <div id="ranks-list-container" class="space-y-2">
+                            <!-- Dynamic Ranks JS -->
+                        </div>
+                    </div>
+                    <!-- Rank Details (7 cols) -->
+                    <div class="md:col-span-7 hud-card p-6 rounded-2xl flex flex-col justify-between border-2 border-slate-200" id="rank-detail-card">
+                        <!-- Dynamic Content JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: Stack Blueprint (Hidden by default) -->
+            <div id="tab-content-stack" class="hidden space-y-4">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                    <!-- Stack Interactive Blueprint Visualizer (6 cols) -->
+                    <div class="lg:col-span-6 hud-dark-card text-white p-6 rounded-2xl space-y-4 relative overflow-hidden radar-sweep border border-slate-800">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                            <span class="text-xs font-mono font-bold text-nlAmber">▼ نقطة الاختراق الميداني (POINT OF ENTRY)</span>
+                            <span class="text-[10px] bg-amber-500 text-slate-950 font-black px-2 py-0.5 rounded uppercase">STACK FORMATION</span>
+                        </div>
+
+                        <!-- Stack Interactive Buttons -->
+                        <div class="space-y-2.5 max-w-md mx-auto my-4 relative z-10">
+                            <button onclick="selectStackRole('pointman')" id="slot-pointman" class="stack-slot w-full p-3.5 rounded-xl bg-slate-900/90 border border-slate-700 hover:border-nlAmber flex items-center justify-between text-right transition">
+                                <span class="text-nlAmber font-black text-xs">01. المقدمة</span>
+                                <span class="font-bold text-sm text-white">الكشاف (Point Man)</span>
+                                <span class="text-xl">👁️</span>
+                            </button>
+                            <button onclick="selectStackRole('breacher')" id="slot-breacher" class="stack-slot w-full p-3.5 rounded-xl bg-slate-900/90 border border-slate-700 hover:border-nlAmber flex items-center justify-between text-right transition">
+                                <span class="text-slate-400 font-black text-xs">02. الاختراق</span>
+                                <span class="font-bold text-sm text-white">المقتحم (Breacher)</span>
+                                <span class="text-xl">💥</span>
+                            </button>
+                            <button onclick="selectStackRole('radio')" id="slot-radio" class="stack-slot w-full p-3.5 rounded-xl bg-slate-900/90 border border-slate-700 hover:border-nlAmber flex items-center justify-between text-right transition">
+                                <span class="text-slate-400 font-black text-xs">03. التنسيق</span>
+                                <span class="font-bold text-sm text-white">مؤمن الاتصالات (Radio Op)</span>
+                                <span class="text-xl">📻</span>
+                            </button>
+                            <button onclick="selectStackRole('ems')" id="slot-ems" class="stack-slot w-full p-3.5 rounded-xl bg-slate-900/90 border border-slate-700 hover:border-nlAmber flex items-center justify-between text-right transition">
+                                <span class="text-slate-400 font-black text-xs">04. التغطية الخلفية</span>
+                                <span class="font-bold text-sm text-white">المسعف التكتيكي (Tactical EMS)</span>
+                                <span class="text-xl">🚑</span>
+                            </button>
+                        </div>
+
+                        <!-- External Overwatches -->
+                        <div class="pt-4 border-t border-slate-800 grid grid-cols-2 gap-2 text-xs relative z-10">
+                            <button onclick="selectStackRole('sniper')" id="slot-sniper" class="p-3 bg-slate-900/90 rounded-xl border border-slate-700 text-slate-300 hover:text-white hover:border-nlAmber transition text-center font-bold">
+                                🎯 القناص (محيط الميدان)
+                            </button>
+                            <button onclick="selectStackRole('negotiator')" id="slot-negotiator" class="p-3 bg-slate-900/90 rounded-xl border border-slate-700 text-slate-300 hover:text-white hover:border-nlAmber transition text-center font-bold">
+                                🗣️ المفاوض (غرفة القيادة)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Role Details View (6 cols) -->
+                    <div class="lg:col-span-6 hud-card p-6 rounded-2xl space-y-4" id="stack-role-details">
+                        <!-- Dynamic Role Information JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: Recruitment Pathway -->
+        <section id="recruitment" class="space-y-6">
+            <div class="border-r-4 border-sky-600 pr-4">
+                <h2 class="text-2xl sm:text-3xl font-heading font-black text-slate-900">3. شروط ومسار القبول في SWAT</h2>
+                <p class="text-xs sm:text-sm text-slate-600 mt-1">سلسلة الاختبارات الميدانية والنظرية المعتمدة للالتحاق بوحدة SWAT في نورث لايف.</p>
+            </div>
+
+            <!-- Section Intro Paragraph -->
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed bg-white/80 p-4 rounded-xl border border-slate-200">
+                يوضح هذا القسم الخطة الزمنية والمراحل الخمس الأساسية المعتمدة لتقييم المتقدمين لوحدة SWAT في نورث لايف. يمكنك مراجعة شروط ومحاور كل مرحلة بجانب الرسم البياني المخصص للتوزيع الزمني المقدر لكل اختبار بالدقائق.
+            </p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                <!-- Stepper List (7 cols) -->
+                <div class="lg:col-span-7 hud-card p-6 rounded-2xl space-y-4">
+                    <h3 class="font-heading font-black text-slate-900 border-b pb-3 text-base">خطوات التقييم الميداني والنظري</h3>
+                    <div id="recruitment-steps-container" class="space-y-3">
+                        <!-- Dynamic Stepper via JS -->
+                    </div>
+                </div>
+
+                <!-- Stage Time Chart (5 cols) -->
+                <div class="lg:col-span-5 hud-card p-5 rounded-2xl space-y-3">
+                    <h3 class="font-heading font-black text-slate-900 text-sm sm:text-base border-b pb-3">التوزيع الزمني للاختبارات</h3>
+                    <p class="text-xs text-slate-500">الزمن التقديري المخصص لكل مرحلة تقييم بالدقائق.</p>
+                    <div class="chart-container">
+                        <canvas id="recruitmentChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: Equipment Arsenal -->
+        <section id="equipment" class="space-y-6">
+            <div class="border-r-4 border-nlAmber pr-4">
+                <h2 class="text-2xl sm:text-3xl font-heading font-black text-slate-900">4. العتاد والمركبات التكتيكية</h2>
+                <p class="text-xs sm:text-sm text-slate-600 mt-1">التجهيزات المعتمدة لوحدة SWAT لضمان الحماية الشخصية والتفوق الهجومي.</p>
+            </div>
+
+            <!-- Section Intro Paragraph -->
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed bg-white/80 p-4 rounded-xl border border-slate-200">
+                استعرض تفاصيل الترسانة التكتيكية المقررة لعناصر SWAT في نورث لايف، والتي تشمل الدروع الباليستية، البنادق المتقدمة، وسائط التشتيت، وأدوات الاقتحام والمركبات المصفحة. استخدم الأزرار لتصفية العتاد بحسب الفئة.
+            </p>
+
+            <!-- Filter Buttons -->
+            <div class="flex flex-wrap gap-2 text-xs font-bold">
+                <button onclick="filterEquipment('all')" class="eq-filter-btn active px-3.5 py-1.5 rounded-full border border-slate-300 transition">الكل</button>
+                <button onclick="filterEquipment('PPE')" class="eq-filter-btn px-3.5 py-1.5 rounded-full bg-white border border-slate-300 hover:bg-slate-100 transition">الحماية والدروع</button>
+                <button onclick="filterEquipment('التسليح')" class="eq-filter-btn px-3.5 py-1.5 rounded-full bg-white border border-slate-300 hover:bg-slate-100 transition">الأسلحة والبنادق</button>
+                <button onclick="filterEquipment('الوسائط')" class="eq-filter-btn px-3.5 py-1.5 rounded-full bg-white border border-slate-300 hover:bg-slate-100 transition">قنابل التشتيت</button>
+                <button onclick="filterEquipment('الاقتحام')" class="eq-filter-btn px-3.5 py-1.5 rounded-full bg-white border border-slate-300 hover:bg-slate-100 transition">أدوات الكسر</button>
+                <button onclick="filterEquipment('المركبات')" class="eq-filter-btn px-3.5 py-1.5 rounded-full bg-white border border-slate-300 hover:bg-slate-100 transition">المركبات المصفحة</button>
+            </div>
+
+            <!-- Equipment Grid & Doughnut Chart Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                <div id="equipment-grid" class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Dynamic Equipment JS -->
+                </div>
+
+                <div class="lg:col-span-5 hud-card p-5 rounded-2xl space-y-3">
+                    <h3 class="font-heading font-black text-slate-900 text-sm sm:text-base border-b pb-3">توزيع الحقيبة التكتيكية</h3>
+                    <p class="text-xs text-slate-500">نسب التوزيع الفئوي للأسلحة والعتاد المخصص للعناصر.</p>
+                    <div class="chart-container">
+                        <canvas id="equipmentChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 6: Candidate Readiness Calculator -->
+        <section id="calculator" class="space-y-6">
+            <!-- Section Intro Paragraph -->
+            <p class="text-xs sm:text-sm text-slate-600 leading-relaxed bg-white/80 p-4 rounded-xl border border-slate-200">
+                هذا القسم مخصص لقياس مدى جاهزيتك واكتمال شروطك للتقدم لاختبار القبول في فرقة SWAT بنورث لايف (North Life). حدد المهارات والشروط المتاحة لديك لحساب نسبة القبول التقديرية فوراً.
+            </p>
+
+            <div class="hud-dark-card text-white p-6 sm:p-10 rounded-3xl relative overflow-hidden border-2 border-slate-800 shadow-2xl">
+                <div class="max-w-2xl space-y-2">
+                    <span class="px-3 py-1 bg-nlAmber text-slate-950 font-black text-xs rounded-full">أداة محاكاة تفاعلية</span>
+                    <h2 class="text-2xl sm:text-4xl font-heading font-black">حاسبة قبول المرشح (North Life SWAT)</h2>
+                    <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                        قم بتحديد المهارات والشروط المتوفرة لديك لقياس درجة ملاءمتك واجتياز اختبار SWAT الخاص بنورث لايف.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-8 items-center">
+                    <!-- Checkboxes (7 cols) -->
+                    <div class="lg:col-span-7 space-y-3 text-sm">
+                        <label class="flex items-center gap-3 p-3.5 bg-slate-900/90 rounded-xl border border-slate-800 cursor-pointer hover:border-nlAmber transition">
+                            <input type="checkbox" id="check-police" onchange="calculateReadiness()" class="w-4 h-4 text-nlAmber rounded accent-amber-500">
+                            <span class="font-medium text-xs sm:text-sm">خدمة فعلية سابقة في قطاع الشرطة العامة بنورث لايف</span>
+                        </label>
+                        <label class="flex items-center gap-3 p-3.5 bg-slate-900/90 rounded-xl border border-slate-800 cursor-pointer hover:border-nlAmber transition">
+                            <input type="checkbox" id="check-record" onchange="calculateReadiness()" class="w-4 h-4 text-nlAmber rounded accent-amber-500">
+                            <span class="font-medium text-xs sm:text-sm">سجل انضباطي خالٍ من المخالفات الإدارية في قوانين نورث لايف</span>
+                        </label>
+                        <label class="flex items-center gap-3 p-3.5 bg-slate-900/90 rounded-xl border border-slate-800 cursor-pointer hover:border-nlAmber transition">
+                            <input type="checkbox" id="check-driving" onchange="calculateReadiness()" class="w-4 h-4 text-nlAmber rounded accent-amber-500">
+                            <span class="font-medium text-xs sm:text-sm">إتقان مناورات القيادة التكتيكية وتكنيك الاستجابة بالمركبات (PIT Maneuver)</span>
+                        </label>
+                        <label class="flex items-center gap-3 p-3.5 bg-slate-900/90 rounded-xl border border-slate-800 cursor-pointer hover:border-nlAmber transition">
+                            <input type="checkbox" id="check-shooting" onchange="calculateReadiness()" class="w-4 h-4 text-nlAmber rounded accent-amber-500">
+                            <span class="font-medium text-xs sm:text-sm">دقة رماية وحركية عالية في الاشتباك السريع والـ CQB</span>
+                        </label>
+                        <label class="flex items-center gap-3 p-3.5 bg-slate-900/90 rounded-xl border border-slate-800 cursor-pointer hover:border-nlAmber transition">
+                            <input type="checkbox" id="check-roleplay" onchange="calculateReadiness()" class="w-4 h-4 text-nlAmber rounded accent-amber-500">
+                            <span class="font-medium text-xs sm:text-sm">خبرة ممتازة في تقمص الشخصية وحفظ قوانين الـ Roleplay في نورث لايف</span>
+                        </label>
+                    </div>
+
+                    <!-- Readiness Result Display (5 cols) -->
+                    <div class="lg:col-span-5 bg-slate-950 p-6 rounded-2xl border border-slate-800 text-center space-y-4 shadow-2xl">
+                        <div class="text-xs font-black text-slate-400 uppercase tracking-widest">نسبة الملاءمة والقبول</div>
+                        <div id="readiness-score" class="text-5xl font-black text-nlAmber font-heading">0%</div>
+                        <p id="readiness-status" class="text-xs text-slate-300 min-h-[36px] flex items-center justify-center font-medium">
+                            قم بتحديد الشروط لحساب النسبة التقديرية.
+                        </p>
+                        <div class="w-full bg-slate-900 rounded-full h-3 overflow-hidden p-0.5 border border-slate-800">
+                            <div id="readiness-bar" class="bg-gradient-to-r from-amber-600 to-nlAmber h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 text-slate-400 border-t border-slate-800 py-8 text-xs text-center">
+        <div class="max-w-7xl mx-auto px-4 space-y-2">
+            <div class="flex items-center justify-center gap-2 font-bold text-slate-200 text-sm">
+                <span>🚨</span>
+                <span>North Life SWAT Division | Tactical Operational Guide</span>
+            </div>
+            <p class="text-slate-500">تم التطوير للمحاكاة والتقييم التكتيكي في مجتمع نورث لايف (North Life) - التزم دائماً بالسلسلة القيادية والقوانين.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // DATA SOURCES (North Life Focused)
+        const missionsData = [
+            { id: 'm1', name: 'مداهمة المواقع الخطرة', target: 'تحييد العصابات المترصدة وتطهير المنشآت الحصينة', risk: 'مرتفع جداً', riskLevel: 90, tactic: 'الاقتحام المنهجي والقتال القريب (CQB)', icon: '🏚️' },
+            { id: 'm2', name: 'إنقاذ الرهائن (Hostage Rescue)', target: 'تخليص المدنيين وتأمين إجلائهم بأمان بدون خسائر', risk: 'حرج للغاية', riskLevel: 100, tactic: 'التدخل السريع والدعم بالقنص الدقيق', icon: '🚨' },
+            { id: 'm3', name: 'التعامل مع المجرمين المسلحين', target: 'فرض السيطرة الميدانية والحد من إطلاق النار العشوائي', risk: 'مرتفع', riskLevel: 80, tactic: 'التطويق الميداني، الحصار، والتفاوض', icon: '🔫' },
+            { id: 'm4', name: 'دعم الشرطة (Officer Down)', target: 'إسناد قوات الشرطة العامة في البلاغات عالية الخطورة (Code 3)', risk: 'مرتفع', riskLevel: 75, tactic: 'التغطية النارية وتوفير الحماية المدرعة', icon: '🚔' },
+            { id: 'm5', name: 'تأمين الفعاليات والمناطق', target: 'حماية المواقع الحيوية والمواكب الرسمية للشخصيات', risk: 'متوسط', riskLevel: 55, tactic: 'الانتشار الوقائي وتغطية القناصة للمحيط', icon: '🏛️' }
+        ];
+
+        const ranksData = [
+            { title: 'Trainee SWAT (متدرب)', level: 'مرحلة التجربة والتأهيل', duties: 'اجتياز الاختبارات الميدانية وفترة الملاحظة وتقييم الانضباط.', icon: '🌱' },
+            { title: 'SWAT Operator (عضو عمليات)', level: 'عنصر تنفيذ عملياتي', duties: 'تنفيذ المداهمات الميدانية، تطهير الغرف، والتأمين المباشر.', icon: '🛡️' },
+            { title: 'Senior Operator (عضو خبير)', level: 'عنصر ميداني متقدم', duties: 'قيادة المجموعات الفرعية وإرشاد العناصر الجديدة أثناء الاشتباك.', icon: '⭐' },
+            { title: 'Corporal (عريف)', level: 'إشراف فني', duties: 'متابعة الجاهزية الفنية للمعدات، الأسلحة، والمركبات التكتيكية.', icon: '🎖️' },
+            { title: 'Sergeant (رقيب)', level: 'قيادة ميدانية', duties: 'التوجيه المباشر لتشكيل الاقتحام وإدارة المناورات التكتيكية.', icon: '🎗️' },
+            { title: 'Lieutenant (ملازم)', level: 'قيادة تكتيكية', duties: 'إدارة غرفة الاتصالات الميدانية والربط بين الفرقة والشرطة.', icon: '📐' },
+            { title: 'Captain (نقيب)', level: 'التخطيط والتدريب', duties: 'إعداد برامج التدريب المتقدم والتخطيط الخططي المسبق للعمليات.', icon: '📊' },
+            { title: 'Commander (قائد الفريق)', level: 'قيادة عملياتية عليا', duties: 'اتخاذ القرارات المصيرية، إصدار أوامر الاقتحام واستخدام القوة.', icon: '👑' },
+            { title: 'Chief of SWAT (رئيس السوات)', level: 'إدارة وتنظيم عام', duties: 'إدارة القطاع بالكامل، رسم السياسات العامة، واعتمد الترفيعات.', icon: '🏛️' }
+        ];
+
+        const stackRolesData = {
+            pointman: { name: 'الكشاف (Point Man)', position: 'رأس التشكيل (المركز الأول)', gear: 'أسلحة خفيفة حركية، درع باليستي خفيف، مناظير رؤية ليلية', function: 'اكتشاف التهديدات المباشرة وتطهير الزوايا الحرجة فور الدخول.' },
+            breacher: { name: 'المقتحم (Breacher)', position: 'ثاني التشكيل (المركز الثاني)', gear: 'كاسرات هيدروليكية، أدوات ميكانيكية، شحنات تفجير موجهة', function: 'إزالة العوائق، اختراق الأبواب والمنافذ المغلقة بسرعة فائقة.' },
+            radio: { name: 'مؤمن الاتصالات (Radio Op)', position: 'قلب التشكيل (المركز الثالث)', gear: 'أجهزة لاسلكية مشفرة، أجهزة كشف الإشارات', function: 'الحفاظ على الاتصال المستمر بغرفة القيادة ونقل مستجدات البلاغ.' },
+            ems: { name: 'المسعف التكتيكي (Tactical EMS)', position: 'مؤخرة التشكيل الميداني', gear: 'حقيبة إسعاف حرج، أدوات السيطرة على النزيف الحاد', function: 'تثبيت الإصابات الميدانية وتوفير الرعاية الطبية تحت النار.' },
+            sniper: { name: 'القناص التكتيكي (Sniper)', position: 'محيط الميدان (تغطية مرتفعة)', gear: 'بندقية قنص هجومية، مشاهد بصرية حرارية', function: 'المراقبة الاستخباراتية وتوفير الغطاء البصري وتحييد الأهداف البعيدة.' },
+            negotiator: { name: 'المفاوض في الأزمات (Negotiator)', position: 'غرفة القيادة والاتصالات', gear: 'أنظمة اتصالات مكبرة ومعدات مفاوضات مشفرة', function: 'إدارة التواصل الشفهي مع المشتبه بهم لتهدئة الموقف والدفع للاستسلام.' }
+        };
+
+        const recruitmentStepsData = [
+            { step: 1, name: 'أن تكون في الشرطة أولاً', duration: 'السجل الوظيفي', focus: 'فحص سجل الضابط بقطاع الشرطة والالتزام بالضوابط', criteria: 'رتبة نشطة وسجل نظيف' },
+            { step: 2, name: 'الالتزام بالقوانين والأنظمة', duration: 'التقييم الإداري', focus: 'السلوك العام والالتزام بقوانين نورث لايف', criteria: 'خالٍ من المخالفات الإدارية' },
+            { step: 3, name: 'اختبار القيادة والتكتيك', duration: '60 دقيقة', focus: 'مناورات القيادة والتثبيت بالمركبات (PIT Maneuver)', criteria: 'اجتياز المسار بدون تصادم' },
+            { step: 4, name: 'اختبار وإصدار التدريب الميداني', duration: '90 دقيقة', focus: 'اقتحام المباني وتطهير الغرف والرماية التكتيكية (CQB)', criteria: 'إنهاء السيناريو بدون خسائر' },
+            { step: 5, name: 'خبرة جيدة في الـ Roleplay', duration: 'التقييم النهائي', focus: 'تقمص الشخصية والتفاعل الواقعي أثناء الحالات المعقدة', criteria: 'استيعاب كافة البنود التشغيلية' }
+        ];
+
+        const equipmentData = [
+            { name: 'دروع واقية باليستية (Heavy Armor)', category: 'PPE', specs: 'ألواح سيراميك مقوى، جيوب MOLLE للعتاد', purpose: 'امتصاص الأعيرة النارية وتوفير الحماية المباشرة', icon: '🥼' },
+            { name: 'خوذة SWAT التكتيكية', category: 'PPE', specs: 'سكك تركيب جانبية، مناظير رؤية ليلية NVG', purpose: 'حماية الرأس وتثبيت معدات الرؤية والاتصال', icon: '🪖' },
+            { name: 'أسلحة تكتيكية مجهزة', category: 'التسليح', specs: 'بنادق هجومية، مناظير نقطة حمراء، كشافات', purpose: 'التسليح الهجومي المعتمد للاشتباك القريب والمتوسط', icon: '🔫' },
+            { name: 'بندقية القنص الحرارية', category: 'التسليح', specs: 'مشاهد بصرية حرارية وتكبير بؤري دقيق', purpose: 'القنص التكتيكي وتوفير الغطاء البصري البعيد', icon: '🎯' },
+            { name: 'قنابل التشتيت (Flashbangs)', category: 'الوسائط', specs: 'انبعاثات ضوئية وصوتية مكثفة شديدة', purpose: 'إرباك الخصوم وشل الحركة مؤقتاً قبل الدخول', icon: '💥' },
+            { name: 'معدات اقتحام وكسر الأبواب', category: 'الاقتحام', specs: 'أدوات ميكانيكية وهيدروليكية وشحنات موجهة', purpose: 'فتح المداخل واختراق العوائق المقفلة بسرعة', icon: '🚪' },
+            { name: 'مركبات تكتيكية مصفحة (BearCat)', category: 'المركبات', specs: 'تصفيح باليستي ثقيل، زجاج مقوى ضد الرصاص', purpose: 'نقل القوات وتوفير الغطاء الحركي الآمن', icon: '🚘' }
+        ];
+
+        // RENDER FUNCTIONS
+
+        // Mission Cards Rendering
+        function renderMissions(items) {
+            const container = document.getElementById('missions-grid');
+            container.innerHTML = items.map(m => `
+                <div class="hud-card p-4 rounded-2xl space-y-3 relative overflow-hidden flex flex-col justify-between border border-slate-200">
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-3xl">${m.icon}</span>
+                            <span class="px-2.5 py-1 text-[10px] font-black rounded-full ${getRiskBadgeStyle(m.risk)}">
+                                ${m.risk}
+                            </span>
+                        </div>
+                        <h3 class="font-heading font-black text-slate-900 text-base">${m.name}</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed"><strong>الهدف:</strong> ${m.target}</p>
+                    </div>
+                    <div class="pt-2 border-t border-slate-100 text-xs text-amber-700 font-bold flex items-center gap-1.5">
+                        <span>🛠️</span>
+                        <span>التكتيك: ${m.tactic}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getRiskBadgeStyle(risk) {
+            switch(risk) {
+                case 'حرج للغاية': return 'bg-red-600 text-white shadow-md';
+                case 'مرتفع جداً': return 'bg-orange-500 text-white shadow-md';
+                case 'مرتفع': return 'bg-amber-500 text-slate-950 font-black shadow-md';
+                default: return 'bg-sky-600 text-white shadow-md';
+            }
+        }
+
+        function filterMissions(category) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            if (category === 'all') renderMissions(missionsData);
+            else renderMissions(missionsData.filter(m => m.risk === category));
+        }
+
+        // Ranks Rendering
+        function renderRanks() {
+            const listContainer = document.getElementById('ranks-list-container');
+            listContainer.innerHTML = ranksData.map((r, idx) => `
+                <button onclick="selectRank(${idx})" class="w-full text-right p-3 rounded-xl bg-white border border-slate-200 hover:border-nlAmber hover:shadow-md transition flex items-center justify-between group">
+                    <div class="flex items-center gap-3">
+                        <span class="text-xl">${r.icon}</span>
+                        <div>
+                            <div class="font-bold text-slate-900 text-xs sm:text-sm group-hover:text-amber-600 transition">${r.title}</div>
+                            <div class="text-[10px] text-slate-500">${r.level}</div>
+                        </div>
+                    </div>
+                    <span class="text-slate-400 text-xs font-mono">◀</span>
+                </button>
+            `).join('');
+            selectRank(0);
+        }
+
+        function selectRank(index) {
+            const r = ranksData[index];
+            const detailCard = document.getElementById('rank-detail-card');
+            detailCard.innerHTML = `
+                <div class="space-y-4">
+                    <div class="flex items-center gap-4 border-b border-slate-200 pb-4">
+                        <span class="text-4xl p-3 bg-slate-900 text-nlAmber rounded-2xl border border-amber-500/30">${r.icon}</span>
+                        <div>
+                            <span class="px-2.5 py-0.5 bg-slate-900 text-nlAmber text-[10px] font-black rounded-full">${r.level}</span>
+                            <h3 class="text-xl font-heading font-black text-slate-900 mt-1">${r.title}</h3>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <h4 class="text-xs font-black text-slate-700">المسؤوليات والواجبات الميدانية:</h4>
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed bg-slate-100 p-4 rounded-xl border border-slate-200">${r.duties}</p>
+                    </div>
+                </div>
+                <div class="pt-4 mt-4 border-t border-slate-200 text-[11px] text-slate-500 font-bold flex items-center justify-between">
+                    <span>التنفيذ وفق التسلسل القيادي الصارم</span>
+                    <span class="text-amber-600 font-mono">NORTH LIFE PROTOCOL</span>
+                </div>
+            `;
+        }
+
+        function switchHierarchyTab(tab) {
+            const btnRanks = document.getElementById('tab-btn-ranks');
+            const btnStack = document.getElementById('tab-btn-stack');
+            const contentRanks = document.getElementById('tab-content-ranks');
+            const contentStack = document.getElementById('tab-content-stack');
+
+            if (tab === 'ranks') {
+                btnRanks.classList.add('active');
+                btnStack.classList.remove('active');
+                contentRanks.classList.remove('hidden');
+                contentStack.classList.add('hidden');
+            } else {
+                btnStack.classList.add('active');
+                btnRanks.classList.remove('active');
+                contentStack.classList.remove('hidden');
+                contentRanks.classList.add('hidden');
+                selectStackRole('pointman');
+            }
+        }
+
+        function selectStackRole(roleKey) {
+            document.querySelectorAll('.stack-slot').forEach(el => el.classList.remove('active'));
+            const activeSlot = document.getElementById(`slot-${roleKey}`);
+            if(activeSlot) activeSlot.classList.add('active');
+
+            const role = stackRolesData[roleKey] || stackRolesData.pointman;
+            const container = document.getElementById('stack-role-details');
+            container.innerHTML = `
+                <div class="space-y-4">
+                    <div class="border-b border-slate-200 pb-3 flex items-center justify-between">
+                        <div>
+                            <span class="text-[10px] font-black bg-slate-900 text-nlAmber px-2.5 py-0.5 rounded-full uppercase">${role.position}</span>
+                            <h3 class="text-xl font-heading font-black text-slate-900 mt-1">${role.name}</h3>
+                        </div>
+                        <span class="text-3xl">🥷</span>
+                    </div>
+                    <div class="space-y-3 text-xs sm:text-sm">
+                        <div>
+                            <strong class="text-slate-900 block font-bold mb-1">التجهيز والعتاد المخصص:</strong>
+                            <p class="text-slate-600 bg-slate-100 p-3 rounded-xl border border-slate-200 leading-relaxed">${role.gear}</p>
+                        </div>
+                        <div>
+                            <strong class="text-slate-900 block font-bold mb-1">المهمة الميدانية أثناء المداهمة:</strong>
+                            <p class="text-slate-600 bg-slate-100 p-3 rounded-xl border border-slate-200 leading-relaxed">${role.function}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Stepper Rendering
+        function renderRecruitmentSteps() {
+            const container = document.getElementById('recruitment-steps-container');
+            container.innerHTML = recruitmentStepsData.map(s => `
+                <div class="flex items-start gap-3 p-3.5 rounded-xl bg-white hover:bg-slate-50 transition border border-slate-200 shadow-sm">
+                    <div class="flex-shrink-0 w-8 h-8 rounded-xl bg-slate-900 text-nlAmber font-black text-xs flex items-center justify-center shadow-md">
+                        ${s.step}
+                    </div>
+                    <div class="space-y-1 text-xs flex-1">
+                        <div class="flex items-center justify-between">
+                            <h4 class="font-bold text-slate-900 text-sm">${s.name}</h4>
+                            <span class="text-[10px] bg-slate-200 px-2 py-0.5 rounded font-mono text-slate-800 font-bold">⏱️ ${s.duration}</span>
+                        </div>
+                        <p class="text-slate-600"><strong>محور التقييم:</strong> ${s.focus}</p>
+                        <p class="text-sky-700 font-bold">✓ شرط النجاح: ${s.criteria}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Equipment Rendering
+        function renderEquipment(items) {
+            const container = document.getElementById('equipment-grid');
+            container.innerHTML = items.map(eq => `
+                <div class="hud-card p-4 rounded-2xl space-y-2 flex flex-col justify-between border border-slate-200">
+                    <div class="space-y-1.5">
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl">${eq.icon}</span>
+                            <span class="px-2 py-0.5 text-[10px] font-bold rounded-md bg-slate-200 text-slate-800">${eq.category}</span>
+                        </div>
+                        <h4 class="font-bold text-slate-900 text-sm sm:text-base">${eq.name}</h4>
+                        <p class="text-xs text-slate-500"><strong>المواصفات:</strong> ${eq.specs}</p>
+                    </div>
+                    <p class="text-xs text-slate-700 pt-2 border-t border-slate-100 font-medium"><strong>الغرض:</strong> ${eq.purpose}</p>
+                </div>
+            `).join('');
+        }
+
+        function filterEquipment(cat) {
+            document.querySelectorAll('.eq-filter-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            if (cat === 'all') renderEquipment(equipmentData);
+            else renderEquipment(equipmentData.filter(e => e.category === cat));
+        }
+
+        // North Life Readiness Calculator
+        function calculateReadiness() {
+            const checks = ['check-police', 'check-record', 'check-driving', 'check-shooting', 'check-roleplay'];
+            let score = 0;
+            checks.forEach(id => {
+                if (document.getElementById(id).checked) score += 20;
+            });
+
+            const scoreEl = document.getElementById('readiness-score');
+            const statusEl = document.getElementById('readiness-status');
+            const barEl = document.getElementById('readiness-bar');
+
+            scoreEl.innerText = `${score}%`;
+            barEl.style.width = `${score}%`;
+
+            if (score === 100) {
+                statusEl.innerText = 'جاهزية كاملة ممتازة! مستوفٍ لكافة الشروط للتسجيل في SWAT بنورث لايف.';
+                statusEl.className = 'text-xs text-emerald-400 font-bold';
+            } else if (score >= 60) {
+                statusEl.innerText = 'جاهزية متوسطة. يوصى باجتياز دورات القيادة التكتيكية والرمي.';
+                statusEl.className = 'text-xs text-nlAmber font-bold';
+            } else {
+                statusEl.innerText = 'غير مستوفٍ للحد الأدنى من المعايير المطلوبة.';
+                statusEl.className = 'text-xs text-slate-400 font-medium';
+            }
+        }
+
+        // CHARTS INITIALIZATION
+        function initCharts() {
+            // 1. Mission Risk Chart
+            const ctxMissions = document.getElementById('missionsChart').getContext('2d');
+            new Chart(ctxMissions, {
+                type: 'bar',
+                data: {
+                    labels: missionsData.map(m => m.name),
+                    datasets: [{
+                        label: 'مستوى الخطورة (%)',
+                        data: missionsData.map(m => m.riskLevel),
+                        backgroundColor: '#0f172a',
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, max: 100 },
+                        x: { ticks: { font: { family: 'Tajawal', size: 10 } } }
+                    }
+                }
+            });
+
+            // 2. Stage Duration Chart
+            const ctxRecruitment = document.getElementById('recruitmentChart').getContext('2d');
+            new Chart(ctxRecruitment, {
+                type: 'bar',
+                data: {
+                    labels: ['الخدمة أولاً', 'الالتزام', 'القيادة', 'التدريب', 'الـ Roleplay'],
+                    datasets: [{
+                        label: 'الوزن النسبي بالدقائق',
+                        data: [30, 30, 60, 90, 25],
+                        backgroundColor: '#0284c7',
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { beginAtZero: true },
+                        y: { ticks: { font: { family: 'Tajawal', size: 11 } } }
+                    }
+                }
+            });
+
+            // 3. Equipment Doughnut Chart
+            const ctxEquipment = document.getElementById('equipmentChart').getContext('2d');
+            new Chart(ctxEquipment, {
+                type: 'doughnut',
+                data: {
+                    labels: ['الدروع الواقية', 'خوذة SWAT', 'الأسلحة التكتيكية', 'معدات الاقتحام', 'مركبات مصفحة'],
+                    datasets: [{
+                        data: [2, 1, 2, 1, 1],
+                        backgroundColor: ['#0f172a', '#dc2626', '#0284c7', '#f59e0b', '#475569']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { font: { family: 'Tajawal', size: 10 } } }
+                    }
+                }
+            });
+        }
+
+        // Mobile Menu Toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Initialize App On DOM Ready
+        window.addEventListener('DOMContentLoaded', () => {
+            renderMissions(missionsData);
+            renderRanks();
+            renderRecruitmentSteps();
+            renderEquipment(equipmentData);
+            initCharts();
+        });
+    </script>
+</body>
+</html>
